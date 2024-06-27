@@ -5,12 +5,12 @@
 #include <OneWire.h>
 
 //credentials for the AP
-const char* ssid = "MyPiAP"; 
-const char* password = "raspberry"; 
-const char* mqtt_server = "192.168.5.1"; //static IP set in the RPI AP
+const char* ssid = "####"; 
+const char* password = "######"; 
+const char* mqtt_server = "#####"; //static IP set in the RPI AP
 //mosquitto broker authentication
-const char* mqtt_username = "ESP";
-const char* mqtt_password = "IoTsensor";
+const char* mqtt_username = "####";
+const char* mqtt_password = "#####";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
