@@ -1,3 +1,4 @@
-# Thesis_2024_PA_Sarfaraj_Sikder
+# GreenHouse-IoT-System
 
 Please follow the project report to get a complete understanding and guideline for using the GreenHouse Soil Monitoring System.
+
