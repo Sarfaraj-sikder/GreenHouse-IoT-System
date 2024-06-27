@@ -2,11 +2,11 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
-const char* ssid = "MyPiAP";
-const char* password = "raspberry"; 
-const char* mqtt_server = "192.168.5.1";
-const char* mqtt_username = "ESP";
-const char* mqtt_password = "IoTsensor";
+const char* ssid = "#####";
+const char* password = "####"; 
+const char* mqtt_server = "###";
+const char* mqtt_username = "####";
+const char* mqtt_password = "####";
 
 
 WiFiClient espClient;
