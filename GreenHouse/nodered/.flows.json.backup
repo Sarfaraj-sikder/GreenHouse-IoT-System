@@ -1,0 +1,503 @@
+[
+    {
+        "id": "fe40ec1908b4c0fb",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6768569826a46141",
+        "type": "tab",
+        "label": "GreenHouse",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5e5b410c36415b7f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.5.1",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "7e061297b0432b4c",
+        "type": "influxdb",
+        "hostname": "192.168.5.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "SensorDB",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "timeout": "10",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "9d7e4c8207cf02a3",
+        "type": "debug",
+        "z": "6768569826a46141",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 630,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "0a7b81e8c2b41c97",
+        "type": "change",
+        "z": "6768569826a46141",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"temperature1\": msg.payload.t1,\t    \"pressure1\": msg.payload.p1,\t    \"temperature2\": msg.payload.t2,\t    \"pressure2\": msg.payload.p2,\t    \"temperature3\": msg.payload.t3,\t    \"pressure3\": msg.payload.p3,\t    \"temperature4\": msg.payload.t4,\t    \"pressure4\": msg.payload.p4,\t    \"temperature5\": msg.payload.t5,\t    \"pressure5\": msg.payload.p5,\t    \"temperature6\": msg.payload.t6,\t    \"DHT_Hum\": msg.payload.HUM,\t    \"DHT_Temp\": msg.payload.temp\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 220,
+        "wires": [
+            [
+                "19cce3b52c447ffb",
+                "9d7e4c8207cf02a3"
+            ]
+        ]
+    },
+    {
+        "id": "98968a35f684931e",
+        "type": "mqtt out",
+        "z": "6768569826a46141",
+        "name": "Config Temperature Sensor",
+        "topic": "config/sampleRate/Temperature",
+        "qos": "",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5e5b410c36415b7f",
+        "x": 940,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "8f81369b1d0a1333",
+        "type": "debug",
+        "z": "6768569826a46141",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 730,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "33971ed98333ae22",
+        "type": "inject",
+        "z": "6768569826a46141",
+        "name": "Samplerate",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"sampleRate\":60000}",
+        "payloadType": "json",
+        "x": 590,
+        "y": 580,
+        "wires": [
+            [
+                "98968a35f684931e",
+                "8f81369b1d0a1333"
+            ]
+        ]
+    },
+    {
+        "id": "896f587f769c2fe7",
+        "type": "mqtt in",
+        "z": "6768569826a46141",
+        "name": "Sensors",
+        "topic": "device/Sensors",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "5e5b410c36415b7f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 220,
+        "wires": [
+            [
+                "0a7b81e8c2b41c97"
+            ]
+        ]
+    },
+    {
+        "id": "a6e71ac385b3e666",
+        "type": "mqtt out",
+        "z": "6768569826a46141",
+        "name": "Config Pressure Sensor",
+        "topic": "config/sampleRate/Pressure",
+        "qos": "",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5e5b410c36415b7f",
+        "x": 910,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "3cc7ff1b2dad96e4",
+        "type": "debug",
+        "z": "6768569826a46141",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 710,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "af43c9e431c5f5e0",
+        "type": "inject",
+        "z": "6768569826a46141",
+        "name": "Samplerate",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"sampleRate\":20000}",
+        "payloadType": "json",
+        "x": 570,
+        "y": 840,
+        "wires": [
+            [
+                "a6e71ac385b3e666",
+                "3cc7ff1b2dad96e4"
+            ]
+        ]
+    },
+    {
+        "id": "ce98dcd63bb70ba2",
+        "type": "mqtt out",
+        "z": "6768569826a46141",
+        "name": "Config DHT11 Sensor",
+        "topic": "config/sampleRate/DHT11",
+        "qos": "",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5e5b410c36415b7f",
+        "x": 920,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "fe883ab463a7b32f",
+        "type": "debug",
+        "z": "6768569826a46141",
+        "name": "debug 20",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 730,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "8fa3d10a27925fee",
+        "type": "inject",
+        "z": "6768569826a46141",
+        "name": "Samplerate",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"sampleRate\":5000}",
+        "payloadType": "json",
+        "x": 590,
+        "y": 1560,
+        "wires": [
+            [
+                "ce98dcd63bb70ba2",
+                "fe883ab463a7b32f"
+            ]
+        ]
+    },
+    {
+        "id": "d16f475518783a7b",
+        "type": "comment",
+        "z": "6768569826a46141",
+        "name": "Change Temparature Sensor Sampling Rate",
+        "info": "",
+        "x": 290,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "6ffcb9b30d5085d6",
+        "type": "comment",
+        "z": "6768569826a46141",
+        "name": "Default samplerate set at 10s, 1s = 1000ms, put value in ms",
+        "info": "",
+        "x": 340,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "11ef2ed00d1901c4",
+        "type": "comment",
+        "z": "6768569826a46141",
+        "name": "Change Pressure Sensor Sampling Rate",
+        "info": "",
+        "x": 280,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "f944428c1abd5a91",
+        "type": "comment",
+        "z": "6768569826a46141",
+        "name": "Change DHT11 Sensor Sampling Rate",
+        "info": "",
+        "x": 290,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "f0e276a65000d798",
+        "type": "comment",
+        "z": "6768569826a46141",
+        "name": "Sensors Sending Data to Database",
+        "info": "",
+        "x": 260,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "4dbfd5100fc60b77",
+        "type": "mqtt out",
+        "z": "6768569826a46141",
+        "name": "Config Slope of Pressure Sensor",
+        "topic": "config/slope_MPX5100DP",
+        "qos": "",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5e5b410c36415b7f",
+        "x": 920,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "ce8b4d0eed1ee988",
+        "type": "debug",
+        "z": "6768569826a46141",
+        "name": "debug 22",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 690,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "2d645cfb3869d2e6",
+        "type": "inject",
+        "z": "6768569826a46141",
+        "name": "Slope",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"slope_MPX5100DP\":1}",
+        "payloadType": "json",
+        "x": 530,
+        "y": 1060,
+        "wires": [
+            [
+                "4dbfd5100fc60b77",
+                "ce8b4d0eed1ee988"
+            ]
+        ]
+    },
+    {
+        "id": "d66b80a7c00ab3c8",
+        "type": "mqtt out",
+        "z": "6768569826a46141",
+        "name": "Config Intercept of Pressure Sensor",
+        "topic": "config/intercept_MPX5100DP",
+        "qos": "",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5e5b410c36415b7f",
+        "x": 920,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "9629418d7beb1e6e",
+        "type": "debug",
+        "z": "6768569826a46141",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 690,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "13de09d68ef848a3",
+        "type": "inject",
+        "z": "6768569826a46141",
+        "name": "Intercept",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"intercept_MPX5100DP\":6}",
+        "payloadType": "json",
+        "x": 540,
+        "y": 1240,
+        "wires": [
+            [
+                "d66b80a7c00ab3c8",
+                "9629418d7beb1e6e"
+            ]
+        ]
+    },
+    {
+        "id": "19cce3b52c447ffb",
+        "type": "influxdb out",
+        "z": "6768569826a46141",
+        "influxdb": "7e061297b0432b4c",
+        "name": "influxDB",
+        "measurement": "SmartSensors",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1040,
+        "y": 220,
+        "wires": []
+    }
+]

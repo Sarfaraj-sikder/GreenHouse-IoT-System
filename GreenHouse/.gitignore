@@ -1,0 +1,4 @@
+influxdb/data
+grafana/alerting/
+mosquitto/passwd_file/
+influxdb/wal

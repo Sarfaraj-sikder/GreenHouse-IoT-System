@@ -1,0 +1,8 @@
+# Use the InfluxDB base image
+FROM influxdb:1.8.10
+
+# Set the timezone environment variable (if not already set)
+ENV TZ=${TZ:-Etc/UTC}
+
+# Expose port 8086 for InfluxDB HTTP API
+EXPOSE 8086

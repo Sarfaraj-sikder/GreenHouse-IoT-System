@@ -1,0 +1,13 @@
+FROM grafana/grafana:latest
+
+# Set the user to root
+USER root
+
+# Copy Grafana configuration and data
+COPY ./grafana /var/lib/grafana
+
+# Expose Grafana port
+EXPOSE 3000
+
+# Start Grafana
+CMD ["grafana-server"]
